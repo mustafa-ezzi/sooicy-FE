@@ -1,3 +1,5 @@
+
+
 import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiService from '../services/apiService';
@@ -657,33 +659,49 @@ const CartPage = ({
                         {recommendedProducts.length > 0 && (
                             <div className="mt-12">
                                 {/* Header with Gradient and Icon */}
-                                <div className="flex items-center justify-between mb-8">
-                                    <div className="flex items-center gap-3">
+                                <div
+                                    className="text-center mb-12 rounded-3xl shadow-lg p-8 sm:p-10 max-w-4xl mx-auto"
+                                    style={{
+                                        border: '3px solid #0188D3',
+                                        backgroundColor: 'white'
+                                    }}
+                                >
+                                    {/* Icon and Title */}
+                                    <div className="flex flex-col items-center">
                                         <div
-                                            className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg"
-                                            style={{
-                                                background: 'linear-gradient(135deg, #F279AB 0%, #0486D2 100%)'
-                                            }}
+                                            className="w-16 h-16 rounded-full flex items-center justify-center mb-4 shadow-md"
+                                            style={{ backgroundColor: '#0188D3' }}
                                         >
-                                            <TrendingUp className="w-6 h-6 text-white" />
+                                            <TrendingUp className="w-8 h-8 text-white" />
                                         </div>
-                                        <div>
-                                            <h3
-                                                className="text-3xl font-bold"
-                                                style={{
-                                                    background: 'linear-gradient(135deg, #F279AB 0%, #0486D2 100%)',
-                                                    WebkitBackgroundClip: 'text',
-                                                    WebkitTextFillColor: 'transparent'
-                                                }}
-                                            >
-                                                You Might Also Like
-                                            </h3>
-                                            <p className="text-sm text-gray-600 mt-1">
-                                                Popular items our customers love
-                                            </p>
-                                        </div>
+
+                                        <h3
+                                            className="text-4xl sm:text-5xl font-extrabold tracking-tight"
+                                            style={{ color: '#ED709E' }}
+                                        >
+                                            You Might Also Like
+                                        </h3>
+
+                                        <p
+                                            className="text-base sm:text-lg font-medium mt-2"
+                                            style={{ color: '#0188D3' }}
+                                        >
+                                            Popular items our SooIcy family loves 💖
+                                        </p>
+                                    </div>
+
+                                    {/* Divider Line */}
+                                    <div className="flex items-center justify-center mt-6">
+                                        <div
+                                            className="h-1 w-24 sm:w-32 rounded-full"
+                                            style={{ backgroundColor: '#0188D3' }}
+                                        ></div>
                                     </div>
                                 </div>
+
+
+
+
 
                                 {/* Products Grid */}
                                 {loadingRecommended ? (
