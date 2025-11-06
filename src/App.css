@@ -1,0 +1,142 @@
+/* Custom utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { 
+    transform: translateX(100%); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateX(0); 
+    opacity: 1; 
+  }
+}
+/* Updated CSS for category slider - replace your existing category CSS */
+
+/* Hide scrollbar completely */
+.category-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.category-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+/* Ensure proper overflow handling */
+.category-container {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Enhanced button hover effects */
+.category-button {
+  transition: all 0.3s ease;
+  min-width: fit-content;
+}
+
+.category-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(4, 134, 210, 0.2);
+}
+
+/* Scroll buttons */
+.scroll-button {
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.scroll-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(4, 134, 210, 0.3);
+}
+
+/* Make sure touch events work */
+.category-scroll {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+/* Debug: Add this temporarily to see if scrolling area is working */
+/* Remove after testing */
+/*
+.category-scroll {
+  border: 2px solid red !important;
+  min-height: 60px !important;
+}
+*/
+
+/* Add this to your App.css or global CSS file */
+
+/* Custom ice cream cursor for the entire website */
+/* 
+
+/* THIS IS FOR CUSTOM ICON MOUSE: */
+
+/* Alternative: Using actual image files for cursors */
+/* First, add cursor images to your public/cursors/ folder */
+
+/* Default cursor - ice cream */
+/* * {
+  cursor: url('/cursors/ice-cream-default.png') 16 16, auto;
+}
+
+a, button, [role="button"], input[type="submit"], input[type="button"], select, .clickable {
+  cursor: url('/cursors/ice-cream-hover.png') 16 16, pointer;
+}
+
+input[type="text"], input[type="email"], input[type="tel"], textarea {
+  cursor: url('/cursors/ice-cream-text.png') 12 16, text;
+}
+
+.loading, .spinner {
+  cursor: url('/cursors/ice-cream-loading.png') 16 16, wait;
+}
+
+:disabled, .disabled {
+  cursor: url('/cursors/ice-cream-disabled.png') 16 16, not-allowed;
+}
+
+.product-card:hover, .food-item:hover {
+  cursor: url('/cursors/ice-cream-yummy.png') 16 16, pointer;
+}
+
+.category-slider button:hover {
+  cursor: url('/cursors/ice-cream-category.png') 16 16, pointer;
+}
+
+.cart-button:hover {
+  cursor: url('/cursors/ice-cream-cart.png') 16 16, pointer;
+}
+@supports not (cursor: url('test.png'), auto) {
+  * {
+    cursor: auto;
+  }
+  
+  a, button, [role="button"] {
+    cursor: pointer;
+  }
+  
+  input[type="text"], textarea {
+    cursor: text;
+  }
+} */
