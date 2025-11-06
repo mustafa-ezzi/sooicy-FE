@@ -15,8 +15,7 @@ import ProductDetailPage from './pages/ProductDetailPage';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrdersPage from './pages/OrdersPage';
-
-
+import ScrollToTop from './components/ScrollToTop';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import OrderManagement from './pages/admin/OrderManagement';
@@ -554,6 +553,7 @@ const placeOrder = async (orderDetails) => {
 
   return (
     <Router>
+       <ScrollToTop />
       <Routes>
         { }
         <Route path="/" element={
