@@ -154,7 +154,7 @@ const HomePage = ({
   }, {});
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #FFF5F9 0%, #E3F4FD 100%)' }}>
+    <div className="min-h-screen" >
       {/* Hero Section */}
 <div
   className="relative py-12 sm:py-14 bg-cover bg-center bg-no-repeat"

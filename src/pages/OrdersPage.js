@@ -442,7 +442,7 @@ const OrdersPage = ({ orders, currentUser }) => {
 
   if (liveOrders.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-pink-50 to-blue-50 py-8">
+      <div className="min-h-screen  py-8">
         <div className="container mx-auto px-4">
           <div className="text-center py-16">
             {isLoading ? (

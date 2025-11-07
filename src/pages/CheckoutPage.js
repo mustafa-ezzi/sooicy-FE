@@ -138,9 +138,9 @@ const CheckoutPage = ({ cart, getTotalPrice, getDeliveryFee, selectedLocation, p
 
   if (cart.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #FFF5F9 0%, #E3F4FD 100%)' }}>
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center bg-white rounded-3xl shadow-2xl p-12 max-w-md mx-4 border-2" style={{ borderColor: '#F279AB' }}>
-          <div className="w-24 h-24 rounded-full mx-auto mb-6 flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #F279AB 0%, #0486D2 100%)' }}>
+          <div className="w-24 h-24 rounded-full mx-auto mb-6 flex items-center justify-center">
             <span className="text-5xl">🛒</span>
           </div>
           <h2 className="text-3xl font-bold mb-4" style={{ color: '#F279AB' }}>Your cart is empty</h2>
@@ -194,7 +194,7 @@ const CheckoutPage = ({ cart, getTotalPrice, getDeliveryFee, selectedLocation, p
 
 
   return (
-    <div className="min-h-screen py-12" style={{ background: 'linear-gradient(135deg, #FFF5F9 0%, #E3F4FD 100%)' }}>
+    <div className="min-h-screen py-12" >
 
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">

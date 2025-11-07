@@ -428,7 +428,7 @@ function App() {
   };
 
   const CustomerApp = ({ children }) => (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-blue-50">
+    <div className="min-h-screen bg-white">
       <LocationPopup
         showLocationPopup={showLocationPopup}
         deliveryAreas={locations.filter(loc => loc.available)}

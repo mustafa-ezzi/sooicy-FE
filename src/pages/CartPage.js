@@ -214,9 +214,7 @@ const CartPage = ({
         return (
             <div
                 className="min-h-screen py-12"
-                style={{
-                    background: 'linear-gradient(135deg, #FFF5F9 0%, #E3F4FD 100%)'
-                }}
+                
             >
                 <div className="container mx-auto px-4">
                     <div className="max-w-3xl mx-auto text-center">
@@ -303,9 +301,7 @@ const CartPage = ({
         return (
             <div
                 className="min-h-screen flex items-center justify-center"
-                style={{
-                    background: 'linear-gradient(135deg, #FFF5F9 0%, #E3F4FD 100%)'
-                }}
+                
             >
                 <div
                     className="text-center bg-white rounded-3xl shadow-2xl p-12 max-w-md mx-4 border-2"
@@ -343,9 +339,7 @@ const CartPage = ({
     return (
         <div
             className="min-h-screen py-12"
-            style={{
-                background: 'linear-gradient(135deg, #FFF5F9 0%, #E3F4FD 100%)'
-            }}
+            
         >
             <div className="container mx-auto px-4">
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
