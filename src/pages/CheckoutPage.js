@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, CreditCard, User, CheckCircle, Award } from 'lucide-react';
 
-const CheckoutPage = ({ cart, getTotalPrice, getDeliveryFee, selectedLocation, placeOrder, api, navigate, currentUser, setCurrentUser }) => {
+const CheckoutPage = ({ cart, getTotalPrice, getDeliveryFee, selectedLocation, placeOrder, api, currentUser, setCurrentUser }) => {
+  const navigate = useNavigate(); // ✅ use the hook here
+
   const [customerInfo, setCustomerInfo] = useState({
     name: '',
     phone: '',
@@ -18,15 +20,16 @@ const CheckoutPage = ({ cart, getTotalPrice, getDeliveryFee, selectedLocation, p
   const [isMember, setIsMember] = useState(false);
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+  const [showOrderSuccess, setShowOrderSuccess] = useState(false);
 
-const subtotal = cart.reduce((sum, item) => {
-  const basePrice = parseFloat(item.price || 0);
-  const addonTotal = (item.selectedAddons || []).reduce(
-    (addonSum, addon) => addonSum + parseFloat(addon.price || 0),
-    0
-  );
-  return sum + (basePrice + addonTotal) * (item.quantity || 1);
-}, 0);
+  const subtotal = cart.reduce((sum, item) => {
+    const basePrice = parseFloat(item.price || 0);
+    const addonTotal = (item.selectedAddons || []).reduce(
+      (addonSum, addon) => addonSum + parseFloat(addon.price || 0),
+      0
+    );
+    return sum + (basePrice + addonTotal) * (item.quantity || 1);
+  }, 0);
 
   const deliveryFee = deliveryType === 'delivery' ? Number(getDeliveryFee()) || 0 : 0;
   const tax = subtotal * 0.08;
@@ -122,10 +125,8 @@ const subtotal = cart.reduce((sum, item) => {
       };
 
       await placeOrder(orderDetails);
-      
-      // Navigate to cart page to show order confirmation
-      navigate('/cart');
-      
+      setShowOrderSuccess(true);
+
     } catch (error) {
       console.error('Error during checkout:', error);
       setSubmitMessage('');
@@ -156,35 +157,48 @@ const subtotal = cart.reduce((sum, item) => {
     );
   }
 
+  {/* Unified Success Modal */}
+{showOrderSuccess && (
+  <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+    <div
+      className="bg-white rounded-3xl max-w-md w-full p-10 text-center shadow-2xl border-4 animate-fade-in"
+      style={{ borderColor: '#F279AB' }}
+    >
+      <div
+        className="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg"
+        style={{ backgroundColor: '#0486D2' }}
+      >
+        <Award className="w-12 h-12 text-white" />
+      </div>
+
+      <h3 className="text-3xl font-bold mb-3" style={{ color: '#F279AB' }}>
+        {isMember ? `Welcome back, ${userInfo?.first_name || 'SooIcy Member'}!` : 'Welcome to the SooIcy Family! 🎉'}
+      </h3>
+
+      <p className="mb-8 text-lg font-medium" style={{ color: '#0486D2' }}>
+        {isMember
+          ? 'Your order has been placed successfully. We’re so glad to have you with us again!'
+          : 'Your account has been created and your order is confirmed. Enjoy your SooIcy treats!'}
+      </p>
+
+      <button
+        onClick={() => setShowOrderSuccess(false)}
+        className="px-8 py-4 text-white rounded-xl font-bold hover:shadow-2xl transition-all transform hover:-translate-y-1"
+        style={{ backgroundColor: '#0486D2' }}
+      >
+        Continue Shopping
+      </button>
+    </div>
+  </div>
+)}
+
+
   return (
     <div className="min-h-screen py-12" style={{ background: 'linear-gradient(135deg, #FFF5F9 0%, #E3F4FD 100%)' }}>
-      {/* Welcome Message Modal */}
-      {showWelcomeMessage && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
-          <div className="bg-white rounded-3xl max-w-md w-full p-10 text-center shadow-2xl border-4 transform animate-bounce-in" style={{ borderColor: '#F279AB' }}>
-            <div className="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg" style={{ background: 'linear-gradient(135deg, #F279AB 0%, #0486D2 100%)' }}>
-              <Award className="w-12 h-12 text-white" />
-            </div>
-            <h3 className="text-3xl font-bold mb-3" style={{ color: '#F279AB' }}>
-              Welcome to the SooIcy Family! 🎉
-            </h3>
-            <p className="mb-8 text-lg" style={{ color: '#0486D2' }}>
-              Your account has been created successfully. You're now a proud member of our food-loving community!
-            </p>
-            <button
-              onClick={() => setShowWelcomeMessage(false)}
-              className="px-8 py-4 text-white rounded-xl font-bold hover:shadow-2xl transition-all transform hover:-translate-y-1"
-              style={{ background: 'linear-gradient(135deg, #0486D2 0%, #0366A6 100%)' }}
-            >
-              Continue to Checkout
-            </button>
-          </div>
-        </div>
-      )}
 
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-5xl font-bold mb-3" style={{ 
+          <h2 className="text-5xl font-bold mb-3" style={{
             background: 'linear-gradient(135deg, #F279AB 0%, #0486D2 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
@@ -216,7 +230,7 @@ const subtotal = cart.reduce((sum, item) => {
                 {isMember && userInfo && (
                   <div className="mb-6 p-4 rounded-xl border-2 shadow-inner" style={{ borderColor: '#0486D2', backgroundColor: '#E3F4FD' }}>
                     <p className="text-sm" style={{ color: '#F279AB' }}>
-                      <span className="font-bold text-lg">Welcome back, {userInfo.first_name}!</span> 
+                      <span className="font-bold text-lg">Welcome back, {userInfo.first_name}!</span>
                       <br />
                       <span style={{ color: '#0486D2' }}>Member since: {userInfo.member_duration} • Total orders: {userInfo.total_orders}</span>
                     </p>
@@ -230,11 +244,10 @@ const subtotal = cart.reduce((sum, item) => {
                       placeholder="Full Name *"
                       value={customerInfo.name}
                       onChange={(e) => setCustomerInfo({ ...customerInfo, name: e.target.value })}
-                      className={`w-full px-5 py-4 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all font-medium ${
-                        errors.name ? 'border-red-500 focus:ring-red-200' : ''
-                      }`}
-                      style={{ 
-                        borderColor: errors.name ? undefined : '#F279AB', 
+                      className={`w-full px-5 py-4 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all font-medium ${errors.name ? 'border-red-500 focus:ring-red-200' : ''
+                        }`}
+                      style={{
+                        borderColor: errors.name ? undefined : '#F279AB',
                         color: '#F279AB',
                         backgroundColor: '#FFF5F9'
                       }}
@@ -248,11 +261,10 @@ const subtotal = cart.reduce((sum, item) => {
                       placeholder="Phone Number *"
                       value={customerInfo.phone}
                       onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
-                      className={`w-full px-5 py-4 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all font-medium ${
-                        errors.phone ? 'border-red-500 focus:ring-red-200' : ''
-                      }`}
-                      style={{ 
-                        borderColor: errors.phone ? undefined : '#F279AB', 
+                      className={`w-full px-5 py-4 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all font-medium ${errors.phone ? 'border-red-500 focus:ring-red-200' : ''
+                        }`}
+                      style={{
+                        borderColor: errors.phone ? undefined : '#F279AB',
                         color: '#F279AB',
                         backgroundColor: '#FFF5F9'
                       }}
@@ -266,11 +278,10 @@ const subtotal = cart.reduce((sum, item) => {
                       placeholder="Email Address *"
                       value={customerInfo.email}
                       onChange={(e) => setCustomerInfo({ ...customerInfo, email: e.target.value })}
-                      className={`w-full px-5 py-4 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all font-medium ${
-                        errors.email ? 'border-red-500 focus:ring-red-200' : ''
-                      }`}
-                      style={{ 
-                        borderColor: errors.email ? undefined : '#F279AB', 
+                      className={`w-full px-5 py-4 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all font-medium ${errors.email ? 'border-red-500 focus:ring-red-200' : ''
+                        }`}
+                      style={{
+                        borderColor: errors.email ? undefined : '#F279AB',
                         color: '#F279AB',
                         backgroundColor: '#FFF5F9'
                       }}
@@ -291,7 +302,7 @@ const subtotal = cart.reduce((sum, item) => {
               <div className="bg-white rounded-2xl shadow-xl p-8 border-2 transform hover:scale-[1.01] transition-transform" style={{ borderColor: '#F279AB' }}>
                 <h3 className="text-2xl font-bold mb-6" style={{ color: '#F279AB' }}>Delivery Option</h3>
                 <div className="space-y-4">
-                  <label className="flex items-center p-5 border-2 rounded-xl cursor-pointer hover:shadow-lg transition-all transform hover:-translate-y-0.5" style={{ 
+                  <label className="flex items-center p-5 border-2 rounded-xl cursor-pointer hover:shadow-lg transition-all transform hover:-translate-y-0.5" style={{
                     borderColor: deliveryType === 'delivery' ? '#0486D2' : '#F279AB',
                     backgroundColor: deliveryType === 'delivery' ? '#E3F4FD' : '#FFF5F9'
                   }}>
@@ -309,7 +320,7 @@ const subtotal = cart.reduce((sum, item) => {
                       <div className="text-sm font-medium mt-1" style={{ color: '#0486D2' }}>Delivered to your address (+Pkr{getDeliveryFee()})</div>
                     </div>
                   </label>
-                  <label className="flex items-center p-5 border-2 rounded-xl cursor-pointer hover:shadow-lg transition-all transform hover:-translate-y-0.5" style={{ 
+                  <label className="flex items-center p-5 border-2 rounded-xl cursor-pointer hover:shadow-lg transition-all transform hover:-translate-y-0.5" style={{
                     borderColor: deliveryType === 'pickup' ? '#0486D2' : '#F279AB',
                     backgroundColor: deliveryType === 'pickup' ? '#E3F4FD' : '#FFF5F9'
                   }}>
@@ -343,11 +354,10 @@ const subtotal = cart.reduce((sum, item) => {
                       value={deliveryAddress}
                       onChange={(e) => setDeliveryAddress(e.target.value)}
                       rows={4}
-                      className={`w-full px-5 py-4 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all font-medium ${
-                        errors.address ? 'border-red-500 focus:ring-red-200' : ''
-                      }`}
-                      style={{ 
-                        borderColor: errors.address ? undefined : '#F279AB', 
+                      className={`w-full px-5 py-4 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all font-medium ${errors.address ? 'border-red-500 focus:ring-red-200' : ''
+                        }`}
+                      style={{
+                        borderColor: errors.address ? undefined : '#F279AB',
                         color: '#F279AB',
                         backgroundColor: '#FFF5F9'
                       }}
@@ -387,7 +397,7 @@ const subtotal = cart.reduce((sum, item) => {
                   Payment Method
                 </h3>
                 <div className="space-y-4">
-                  <label className="flex items-center p-5 border-2 rounded-xl cursor-pointer hover:shadow-lg transition-all transform hover:-translate-y-0.5" style={{ 
+                  <label className="flex items-center p-5 border-2 rounded-xl cursor-pointer hover:shadow-lg transition-all transform hover:-translate-y-0.5" style={{
                     borderColor: paymentMethod === 'card' ? '#0486D2' : '#F279AB',
                     backgroundColor: paymentMethod === 'card' ? '#E3F4FD' : '#FFF5F9'
                   }}>
@@ -402,7 +412,7 @@ const subtotal = cart.reduce((sum, item) => {
                     />
                     <span className="font-bold text-lg" style={{ color: '#F279AB' }}>💳 Credit/Debit Card</span>
                   </label>
-                  <label className="flex items-center p-5 border-2 rounded-xl cursor-pointer hover:shadow-lg transition-all transform hover:-translate-y-0.5" style={{ 
+                  <label className="flex items-center p-5 border-2 rounded-xl cursor-pointer hover:shadow-lg transition-all transform hover:-translate-y-0.5" style={{
                     borderColor: paymentMethod === 'cash' ? '#0486D2' : '#F279AB',
                     backgroundColor: paymentMethod === 'cash' ? '#E3F4FD' : '#FFF5F9'
                   }}>
@@ -427,7 +437,7 @@ const subtotal = cart.reduce((sum, item) => {
                   <h4 className="text-xl font-bold ml-3" style={{ color: '#F279AB' }}>Join the Sooicy Family!</h4>
                 </div>
                 <p className="font-medium" style={{ color: '#0486D2' }}>
-                  By placing this order, you'll become a Sooicy member and enjoy exclusive benefits, 
+                  By placing this order, you'll become a Sooicy member and enjoy exclusive benefits,
                   order history tracking, and special offers!
                 </p>
               </div>
@@ -448,8 +458,8 @@ const subtotal = cart.reduce((sum, item) => {
                   const totalPerItem = (basePrice + addonTotal) * item.quantity;
 
                   return (
-                    <div key={item.cartItemId} className="py-3 border-b-2 hover:bg-opacity-50 transition-colors rounded-lg px-2" 
-                         style={{ borderColor: '#FFF5F9' }}>
+                    <div key={item.cartItemId} className="py-3 border-b-2 hover:bg-opacity-50 transition-colors rounded-lg px-2"
+                      style={{ borderColor: '#FFF5F9' }}>
                       <div className="flex justify-between text-sm mb-1">
                         <div>
                           <span className="font-bold" style={{ color: '#F279AB' }}>{item.name}</span>
@@ -487,7 +497,7 @@ const subtotal = cart.reduce((sum, item) => {
                     <div className="flex justify-between font-semibold">
                       <span style={{ color: '#F279AB' }}>Addons Total:</span>
                       <span style={{ color: '#0486D2' }}>
-                        Pkr{cart.reduce((sum, item) => 
+                        Pkr{cart.reduce((sum, item) =>
                           sum + ((item.selectedAddons || []).reduce(
                             (addonSum, addon) => addonSum + parseFloat(addon.price || 0), 0
                           ) * item.quantity), 0).toFixed(2)}
@@ -505,7 +515,7 @@ const subtotal = cart.reduce((sum, item) => {
                 </div>
                 <div className="border-t-2 pt-4 flex justify-between font-bold text-2xl" style={{ borderColor: '#0486D2' }}>
                   <span style={{ color: '#F279AB' }}>Total:</span>
-                  <span style={{ 
+                  <span style={{
                     background: 'linear-gradient(135deg, #F279AB 0%, #0486D2 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent'
@@ -529,9 +539,8 @@ const subtotal = cart.reduce((sum, item) => {
                 type="button"
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className={`w-full px-8 py-5 text-white rounded-xl transition-all text-xl font-bold hover:shadow-2xl transform hover:-translate-y-1 ${
-                  isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
+                className={`w-full px-8 py-5 text-white rounded-xl transition-all text-xl font-bold hover:shadow-2xl transform hover:-translate-y-1 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
                 style={{ background: 'linear-gradient(135deg, #0486D2 0%, #0366A6 100%)' }}
               >
                 {isSubmitting ? 'Processing...' : `Place Order - Pkr${total.toFixed(2)}`}

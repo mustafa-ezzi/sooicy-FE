@@ -228,9 +228,7 @@ const LocationPopup = ({ showLocationPopup, deliveryAreas, onLocationSelect, sel
                     <Clock className="w-3 h-3" style={{ color: '#F279AB' }} />
                     <span className="text-gray-600">{selectedArea.delivery_time}</span>
                   </div>
-                  <span className="font-bold" style={{ color: '#F279AB' }}>
-                    PKR {selectedArea.delivery_fee}
-                  </span>
+                 
                 </div>
               </div>
             </div>

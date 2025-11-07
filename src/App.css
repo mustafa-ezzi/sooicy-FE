@@ -151,3 +151,80 @@ input[type="text"], input[type="email"], input[type="tel"], textarea {
     transform: scale(1.05);
   }
 }
+
+
+@keyframes fade-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+  border-top: 5px solid #0188d3;
+}
+
+.splash-screen.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.splash-content {
+  text-align: center;
+  animation: float 3s ease-in-out infinite;
+}
+
+.logo-circle {
+  width: 160px;
+  height: 160px;
+  background-color: #0188d3;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 40px rgba(1,136,211,0.4);
+  margin: 0 auto 20px;
+  animation: icy-glow 2.5s ease-in-out infinite;
+}
+
+.logo-img {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+}
+
+.splash-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #ed709e;
+  letter-spacing: 1px;
+}
+
+.splash-subtitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #0188d3;
+  margin-top: 5px;
+}
+
+/* 🔥 Floating and Glow Effects */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes icy-glow {
+  0%, 100% { box-shadow: 0 0 30px rgba(1,136,211,0.3); }
+  50% { box-shadow: 0 0 50px rgba(237,112,158,0.5); }
+}

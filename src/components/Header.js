@@ -113,7 +113,7 @@ const Header = ({
     className="flex items-center space-x-2 px-4 py-2 rounded-lg border border-[#0486D2]/20 text-[#0486D2] hover:bg-[#F279AB]/10 hover:text-[#F279AB] font-medium transition-all"
   >
     <Phone className="w-4 h-4" />
-    <span className="font-semibold">+92 336 3399445</span>
+    <span className="font-semibold">+92 311 1794175</span>
   </a>
 
 </div>
@@ -212,7 +212,7 @@ const Header = ({
                 className="flex items-center space-x-2 px-4 py-2 rounded-lg text-left transition-colors text-[#0486D2] hover:bg-[#F279AB]/10 hover:text-[#F279AB] font-medium"
               >
                 <Phone className="w-4 h-4" />
-                <span>+92 336 3399445</span>
+                <span>+92 311 1794175</span>
               </a>
 
               {currentUser && (

@@ -18,7 +18,16 @@ const OrderManagement = ({ addNotification }) => {
     useEffect(() => {
         loadOrders();
         loadRiders();
+
+        // 🔁 Set up polling for real-time updates every 10 seconds
+        const interval = setInterval(() => {
+            loadOrders();
+        }, 10000); // 10 seconds
+
+        // 🧹 Cleanup interval when component unmounts
+        return () => clearInterval(interval);
     }, []);
+
 
     const loadOrders = async () => {
         try {
@@ -237,7 +246,7 @@ const OrderManagement = ({ addNotification }) => {
                                                 <div className="flex justify-between items-center">
                                                     <div>
                                                         <p className="font-medium text-gray-800">
-                                                            {item.product?.name || `Item #${item.product}`}
+                                                            {item.product_name || `Item #${item.product}`}
                                                         </p>
                                                         <p className="text-sm text-gray-600">
                                                             Qty: {item.quantity} × PKR {item.unit_price}
@@ -305,6 +314,9 @@ const OrderManagement = ({ addNotification }) => {
                 <div>
                     <h2 className="text-3xl font-bold text-gray-900">Order Management</h2>
                     <p className="text-gray-600">Manage and track all customer orders</p>
+                    <p className="text-sm text-gray-500">
+                        Auto-updating every 10 seconds...
+                    </p>
                 </div>
             </div>
 
@@ -341,7 +353,18 @@ const OrderManagement = ({ addNotification }) => {
             { }
             <div className="grid grid-cols-1 gap-6">
                 {filteredOrders.map(order => (
-                    <div key={order.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                    <div
+                        key={order.id}
+                        onClick={() => {
+                            setSelectedOrder(order);
+                            setShowModal(true);
+                        }}
+                        className={`rounded-lg p-6 cursor-pointer transition-all duration-300 border-2 ${selectedOrder?.id === order.id
+                            ? 'bg-blue-50 border-[#0188d3] shadow-lg'
+                            : 'bg-white border-transparent hover:border-[#ed709e] hover:shadow-md'
+                            }`}
+                    >
+
                         <div className="flex flex-col lg:flex-row lg:items-center justify-between">
                             <div className="mb-4 lg:mb-0">
                                 <div className="flex items-center space-x-3 mb-2">

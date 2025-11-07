@@ -682,12 +682,7 @@ const CartPage = ({
                                             You Might Also Like
                                         </h3>
 
-                                        <p
-                                            className="text-base sm:text-lg font-medium mt-2"
-                                            style={{ color: '#0188D3' }}
-                                        >
-                                            Popular items our SooIcy family loves 💖
-                                        </p>
+                                        
                                     </div>
 
                                     {/* Divider Line */}
