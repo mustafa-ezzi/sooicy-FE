@@ -354,7 +354,7 @@ const filteredProducts = products.filter(product => {
                     <div className="absolute top-4 left-4 sm:left-8 w-16 h-16 sm:w-20 sm:h-20 rounded-full opacity-20 bg-[#f279ab] animate-pulse"></div>
                     <div className="absolute bottom-4 right-4 sm:right-8 w-24 h-24 sm:w-32 sm:h-32 rounded-full opacity-10 bg-[#f279ab] animate-pulse" style={{ animationDelay: '1s' }}></div>
                     <div className="absolute top-1/2 left-1/4 w-12 h-12 sm:w-16 sm:h-16 rounded-full opacity-15 bg-white animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-
+test
                     {/* Gradient overlay for depth */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-10"></div>
 
