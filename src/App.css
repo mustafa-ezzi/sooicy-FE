@@ -228,3 +228,7 @@ input[type="text"], input[type="email"], input[type="tel"], textarea {
   0%, 100% { box-shadow: 0 0 30px rgba(1,136,211,0.3); }
   50% { box-shadow: 0 0 50px rgba(237,112,158,0.5); }
 }
+
+html {
+  scroll-behavior: smooth;
+}
