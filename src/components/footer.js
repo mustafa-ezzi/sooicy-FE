@@ -8,9 +8,9 @@ const Footer = () => {
       {/* Decorative Wave Top */}
       <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
         <svg className="relative block w-full h-12 sm:h-16" viewBox="0 0 1200 120" preserveAspectRatio="none">
-          <path d="M0,0 L0,40 Q300,80 600,40 T1200,40 L1200,0 Z" fill="white" opacity="0.3"/>
-          <path d="M0,0 L0,60 Q300,100 600,60 T1200,60 L1200,0 Z" fill="white" opacity="0.2"/>
-          <path d="M0,0 L0,80 Q300,120 600,80 T1200,80 L1200,0 Z" fill="white"/>
+          <path d="M0,0 L0,40 Q300,80 600,40 T1200,40 L1200,0 Z" fill="white" opacity="0.3" />
+          <path d="M0,0 L0,60 Q300,100 600,60 T1200,60 L1200,0 Z" fill="white" opacity="0.2" />
+          <path d="M0,0 L0,80 Q300,120 600,80 T1200,80 L1200,0 Z" fill="white" />
         </svg>
       </div>
 
@@ -19,12 +19,12 @@ const Footer = () => {
           {/* Logo & Brand Section */}
           <div className="flex flex-col items-center md:items-start">
             <div className="w-32 h-32 rounded-full flex items-center justify-center mb-4 shadow-xl bg-white p-4">
-  <img
+              <img
                 src={logo}
-    alt="SooIcy Logo"
-    className="object-contain w-30 h-30"
-  />
-</div>
+                alt="SooIcy Logo"
+                className="object-contain w-30 h-30"
+              />
+            </div>
 
             <p className="text-white text-center md:text-left text-sm opacity-90">
               Your favorite ice cream & desserts, delivered fresh!
@@ -43,14 +43,14 @@ const Footer = () => {
                 </div>
                 <span className="text-sm font-medium">+92 311 1794175</span>
               </a>
-              
+
               <a href="mailto:sooicypk@gmail.com" className="flex items-center space-x-3 text-white hover:text-pink-200 transition-colors group">
                 <div className="w-8 h-8 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform" style={{ backgroundColor: '#F279AB' }}>
                   <Mail className="w-4 h-4 text-white" />
                 </div>
                 <span className="text-sm font-medium">sooicypk@gmail.com</span>
               </a>
-              
+
               <div className="flex items-start space-x-3 text-white">
                 <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#F279AB' }}>
                   <MapPin className="w-4 h-4 text-white" />
@@ -89,18 +89,18 @@ const Footer = () => {
               Follow Us
             </h3>
             <div className="flex space-x-4 mb-6">
-              <a 
-                href="https://facebook.com" 
-                target="_blank" 
+              <a
+                href="https://facebook.com"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="w-12 h-12 rounded-full flex items-center justify-center bg-white hover:scale-110 transition-all shadow-lg hover:shadow-xl"
                 style={{ color: '#0486D2' }}
               >
                 <Facebook className="w-6 h-6" fill="currentColor" />
               </a>
-              <a 
-                href="https://www.instagram.com/sooicy.pk/?igsh=bzQ5b2tkc3oxcWFq&utm_source=qr#" 
-                target="_blank" 
+              <a
+                href="https://www.instagram.com/sooicy.pk/?igsh=bzQ5b2tkc3oxcWFq&utm_source=qr#"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="w-12 h-12 rounded-full flex items-center justify-center bg-white hover:scale-110 transition-all shadow-lg hover:shadow-xl"
                 style={{ color: '#F279AB' }}
@@ -108,7 +108,7 @@ const Footer = () => {
                 <Instagram className="w-6 h-6" />
               </a>
             </div>
-            
+
           </div>
         </div>
 
@@ -125,14 +125,14 @@ const Footer = () => {
               Privacy Policy
             </a>
           </div>
-          
+
           <div className="text-white text-sm font-medium">
             © 2025 Powered by{' '}
-                <a href="https://www.trisitesolutions.com" target="_blank" rel="noopener noreferrer">
-            <span className="font-bold" style={{ color: '#42f483' }}>
-                  Trisite Solutions
-            </span>
-                </a>
+            <a href="https://www.trisitesolutions.com" target="_blank" rel="noopener noreferrer">
+              <span className="font-bold" style={{ color: '#42f483' }}>
+                Trisite Solutions
+              </span>
+            </a>
           </div>
         </div>
       </div>
@@ -140,7 +140,7 @@ const Footer = () => {
       {/* Decorative Wave Bottom */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none rotate-180">
         <svg className="relative block w-full h-8 sm:h-12" viewBox="0 0 1200 120" preserveAspectRatio="none">
-          <path d="M0,0 L0,40 Q300,80 600,40 T1200,40 L1200,0 Z" fill="white" opacity="0.1"/>
+          <path d="M0,0 L0,40 Q300,80 600,40 T1200,40 L1200,0 Z" fill="white" opacity="0.1" />
         </svg>
       </div>
     </footer>

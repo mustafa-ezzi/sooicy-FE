@@ -117,11 +117,10 @@ const DashboardOverview = ({ addNotification }) => {
                 <button
                   key={days}
                   onClick={() => setDaysFilter(days)}
-                  className={`px-4 py-1 text-sm font-semibold rounded-full transition-all ${
-                    daysFilter === days
-                      ? 'bg-[#0486D2] text-white shadow-md'
-                      : 'text-[#0486D2] hover:bg-[#D6EBFA]'
-                  }`}
+                  className={`px-4 py-1 text-sm font-semibold rounded-full transition-all ${daysFilter === days
+                    ? 'bg-[#0486D2] text-white shadow-md'
+                    : 'text-[#0486D2] hover:bg-[#D6EBFA]'
+                    }`}
                 >
                   {days === 1 ? '1 Day' : days === 7 ? '7 Days' : '30 Days'}
                 </button>
@@ -209,15 +208,14 @@ const DashboardOverview = ({ addNotification }) => {
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#{order.id}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{order.customer_name}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                      order.status === 'delivered'
-                        ? 'bg-green-100 text-green-800'
-                        : order.status === 'delivering'
+                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${order.status === 'delivered'
+                      ? 'bg-green-100 text-green-800'
+                      : order.status === 'delivering'
                         ? 'bg-blue-100 text-blue-800'
                         : order.status === 'preparing'
-                        ? 'bg-yellow-100 text-yellow-800'
-                        : 'bg-gray-100 text-gray-800'
-                    }`}>
+                          ? 'bg-yellow-100 text-yellow-800'
+                          : 'bg-gray-100 text-gray-800'
+                      }`}>
                       {order.status}
                     </span>
                   </td>

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import {  ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 
 const HomePage = ({
@@ -125,29 +125,29 @@ const HomePage = ({
   };
 
   // Normalize category for comparison
-const normalizeCategory = (cat) => {
-  if (!cat) return '';
-  return cat.toLowerCase().trim().replace(/[\s_]+/g, '-'); // replace spaces/underscores with dashes
-};
+  const normalizeCategory = (cat) => {
+    if (!cat) return '';
+    return cat.toLowerCase().trim().replace(/[\s_]+/g, '-'); // replace spaces/underscores with dashes
+  };
 
 
   // Filter products based on search term and selected category
-const filteredProducts = products.filter(product => {
-  const normalizedProductCategory = normalizeCategory(product.category);
-  const normalizedSelectedCategory = normalizeCategory(selectedCategory);
+  const filteredProducts = products.filter(product => {
+    const normalizedProductCategory = normalizeCategory(product.category);
+    const normalizedSelectedCategory = normalizeCategory(selectedCategory);
 
-  const matchesSearch =
-    product.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.description?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch =
+      product.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.description?.toLowerCase().includes(searchTerm.toLowerCase());
 
-  const matchesCategory =
-    selectedCategory === 'All' ||
-    normalizedProductCategory === normalizedSelectedCategory;
+    const matchesCategory =
+      selectedCategory === 'All' ||
+      normalizedProductCategory === normalizedSelectedCategory;
 
 
 
-  return matchesSearch && matchesCategory;
-});
+    return matchesSearch && matchesCategory;
+  });
 
   // Group products by category for visual separation
   const groupedProducts = filteredProducts.reduce((acc, product) => {
@@ -260,9 +260,9 @@ const filteredProducts = products.filter(product => {
                 <button
                   key={`${category}-${index}`}
                   onClick={() => {
-                      const normalizedValue = category?.toLowerCase().trim();
+                    const normalizedValue = category?.toLowerCase().trim();
 
-  setSelectedCategory(normalizedValue);
+                    setSelectedCategory(normalizedValue);
                     setIsUserInteracting(true);
                     setTimeout(() => setIsUserInteracting(false), 2000);
 
