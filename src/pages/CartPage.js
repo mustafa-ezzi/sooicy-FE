@@ -43,15 +43,10 @@ if (!styleElement.id) {
 const CartPage = ({
     cart,
     updateCart,  // Make sure this is passed
-    updateQuantity,
-    removeFromCart,
-    getTotalPrice,
     getDeliveryFee,
     selectedLocation,
     lastOrder,
     clearLastOrder,
-    addToCart,
-    allProducts = []
 }) => {
     const navigate = useNavigate();
     const [showAddonsModal, setShowAddonsModal] = useState(null);
@@ -113,11 +108,6 @@ const CartPage = ({
     // ✅ Calculate addon subtotal per item (not multiplied by quantity)
     const calculateAddonSubtotalPerUnit = (addons) =>
         (addons || []).reduce((sum, addon) => sum + (parseFloat(addon.price) || 0), 0);
-
-    // ✅ Calculate total addon cost for item (multiplied by quantity)
-    const calculateAddonTotal = (item) => {
-        return calculateAddonSubtotalPerUnit(item.selectedAddons) * (item.quantity || 1);
-    };
 
     // ✅ Optimized cart calculations using useMemo
     const cartCalculations = useMemo(() => {

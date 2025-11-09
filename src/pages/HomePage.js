@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import {  ChevronLeft, ChevronRight } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 
 const HomePage = ({

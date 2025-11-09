@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, CreditCard, User, CheckCircle, Award } from 'lucide-react';
 
-const CheckoutPage = ({ cart, getTotalPrice, getDeliveryFee, selectedLocation, placeOrder, api, currentUser, setCurrentUser }) => {
+const CheckoutPage = ({ cart, getDeliveryFee,placeOrder, api,  setCurrentUser }) => {
   const navigate = useNavigate(); // ✅ use the hook here
 
   const [customerInfo, setCustomerInfo] = useState({

@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Package, Clock, CheckCircle, Truck, Eye, Printer, Search, Filter, Calendar, Phone, User, Crown } from 'lucide-react';
+import { Package, Clock, CheckCircle, Truck, Eye, Search, Filter, Calendar, Phone, User, Crown } from 'lucide-react';
 import apiService from '../services/apiService';
 
 const OrdersPage = ({ orders, currentUser }) => {

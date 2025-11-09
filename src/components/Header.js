@@ -23,7 +23,6 @@ const Header = ({
   const navigate = useNavigate();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm || '');
-  const searchInputRef = useRef(null);
 
   // Sync local state with prop
   useEffect(() => {

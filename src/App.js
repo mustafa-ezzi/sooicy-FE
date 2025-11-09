@@ -4,8 +4,7 @@ import './App.css';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import Footer from './components/footer';
 import Header from './components/Header';
-import Banner from './components/Banner';
-import Popup from './components/Popup';
+
 import LocationPopup from './components/LocationPopup';
 import NotificationSystem from './components/NotificationSystem';
 import WhatsAppButton from './components/Whatsapp';
@@ -19,12 +18,6 @@ import OrdersPage from './pages/OrdersPage';
 import ScrollToTop from './components/ScrollToTop';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
-import OrderManagement from './pages/admin/OrderManagement';
-import ProductManagement from './pages/admin/ProductManagement';
-import LocationManagement from './pages/admin/LocationManagement';
-import RiderManagement from './pages/admin/RiderManagement';
-import AdminOrder from './pages/admin/OrderManagement';
-import ProtectedRoute from './components/ProtectedRoute';
 import apiService from './services/apiService';
 import { addNotification, getTotalPrice, getCartItemCount } from './utils/helpers';
 
