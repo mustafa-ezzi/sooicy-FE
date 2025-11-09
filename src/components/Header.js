@@ -63,7 +63,6 @@ const Header = ({
         currentIndex++;
       } else {
         clearInterval(typeInterval);
-        // Wait before starting next phrase
         setTimeout(() => {
           setCurrentPhraseIndex((prev) => (prev + 1) % searchPhrases.length);
         }, 2000);
@@ -73,14 +72,13 @@ const Header = ({
     return () => clearInterval(typeInterval);
   }, [showSearchInput, currentPhraseIndex]);
 
-  // Focus input when search opens
   useEffect(() => {
     if (showSearchInput && searchInputRef.current) {
       searchInputRef.current.focus();
     }
   }, [showSearchInput]);
 
-  // Debounced search update
+
   const debouncedSetSearchTerm = useCallback((value) => {
     if (debounceTimer.current) {
       clearTimeout(debounceTimer.current);

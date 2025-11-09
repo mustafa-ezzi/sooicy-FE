@@ -3,10 +3,10 @@ import axios from 'axios';
 
 
 export const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL || 'https://sooicy-be-production.up.railway.app/api';
+  process.env.REACT_APP_API_BASE_URL || 'https://sooicy-be-production-7c15.up.railway.app/api';
 
 export const apiClient = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL || 'https://sooicy-be-production.up.railway.app/api',
+  baseURL: process.env.REACT_APP_API_BASE_URL || 'https://sooicy-be-production-7c15.up.railway.app/api',
   adapter: 'xhr',
   headers: { 'Content-Type': 'application/json' },
 });
