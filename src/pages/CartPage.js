@@ -204,7 +204,7 @@ const CartPage = ({
         return (
             <div
                 className="min-h-screen py-12"
-                
+
             >
                 <div className="container mx-auto px-4">
                     <div className="max-w-3xl mx-auto text-center">
@@ -291,7 +291,7 @@ const CartPage = ({
         return (
             <div
                 className="min-h-screen flex items-center justify-center"
-                
+
             >
                 <div
                     className="text-center bg-white rounded-3xl shadow-2xl p-12 max-w-md mx-4 border-2"
@@ -329,7 +329,7 @@ const CartPage = ({
     return (
         <div
             className="min-h-screen py-12"
-            
+
         >
             <div className="container mx-auto px-4">
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
@@ -425,7 +425,7 @@ const CartPage = ({
                                                             >
                                                                 <span>{addon.name}</span>
                                                                 <span style={{ color: '#F279AB' }}>
-                                                                    +Pkr{parseFloat(addon.price).toFixed(2)}
+                                                                    +Rs. {parseFloat(addon.price).toFixed(2)}
                                                                 </span>
                                                                 <button
                                                                     onClick={() => handleQuickRemoveAddon(item.cartItemId, addon.id)}
@@ -449,21 +449,21 @@ const CartPage = ({
                                                 <div className="flex justify-between">
                                                     <span className="font-medium text-gray-600">Base Price:</span>
                                                     <span className="font-semibold" style={{ color: '#0486D2' }}>
-                                                        Pkr{basePrice.toFixed(2)} × {item.quantity}
+                                                        Rs. {basePrice.toFixed(2)} × {item.quantity}
                                                     </span>
                                                 </div>
                                                 {addonSubtotal > 0 && (
                                                     <div className="flex justify-between">
                                                         <span className="font-medium text-gray-600">Extras:</span>
                                                         <span className="font-semibold" style={{ color: '#F279AB' }}>
-                                                            Pkr{addonSubtotal.toFixed(2)} × {item.quantity}
+                                                            Rs. {addonSubtotal.toFixed(2)} × {item.quantity}
                                                         </span>
                                                     </div>
                                                 )}
                                                 <div className="flex justify-between pt-2 border-t-2" style={{ borderColor: '#E3F4FD' }}>
                                                     <span className="font-bold" style={{ color: '#F279AB' }}>Item Total:</span>
                                                     <span className="font-bold text-lg" style={{ color: '#0486D2' }}>
-                                                        Pkr{itemTotal.toFixed(2)}
+                                                        Rs. {itemTotal.toFixed(2)}
                                                     </span>
                                                 </div>
                                             </div>
@@ -590,7 +590,7 @@ const CartPage = ({
                                                                             </div>
                                                                         </div>
                                                                         <div className="font-bold text-lg" style={{ color: '#F279AB' }}>
-                                                                            +Pkr{parseFloat(addon.price).toFixed(2)}
+                                                                            +Rs. {parseFloat(addon.price).toFixed(2)}
                                                                         </div>
                                                                     </div>
                                                                 );
@@ -666,7 +666,7 @@ const CartPage = ({
                                             You Might Also Like
                                         </h3>
 
-                                        
+
                                     </div>
 
                                     {/* Divider Line */}
@@ -782,7 +782,7 @@ const CartPage = ({
                                                                 className="text-2xl font-bold"
                                                                 style={{ color: '#0486D2' }}
                                                             >
-                                                                Pkr{parseFloat(product.price).toFixed(2)}
+                                                                Rs. {parseFloat(product.price).toFixed(2)}
                                                             </div>
                                                         </div>
                                                         <button
@@ -891,18 +891,18 @@ const CartPage = ({
                                 <span style={{ color: '#6B7280' }}>
                                     Subtotal ({cartCalculations.totalItems} items):
                                 </span>
-                                <span style={{ color: '#0486D2' }}>Pkr{cartCalculations.subtotal.toFixed(2)}</span>
+                                <span style={{ color: '#0486D2' }}>Rs. {cartCalculations.subtotal.toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between font-semibold text-base">
                                 <span className="flex items-center gap-1" style={{ color: '#6B7280' }}>
                                     <MapPin className="w-4 h-4" />
                                     Delivery ({selectedLocation?.name || 'Standard'}):
                                 </span>
-                                <span style={{ color: '#0486D2' }}>Pkr{deliveryFee.toFixed(2)}</span>
+                                <span style={{ color: '#0486D2' }}>Rs. {deliveryFee.toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between font-semibold text-base">
                                 <span style={{ color: '#6B7280' }}>Tax (8%):</span>
-                                <span style={{ color: '#0486D2' }}>Pkr{cartCalculations.tax.toFixed(2)}</span>
+                                <span style={{ color: '#0486D2' }}>Rs. {cartCalculations.tax.toFixed(2)}</span>
                             </div>
                             <div
                                 className="border-t-2 pt-4 flex justify-between font-bold text-2xl"
@@ -916,7 +916,7 @@ const CartPage = ({
                                         WebkitTextFillColor: 'transparent'
                                     }}
                                 >
-                                    Pkr{cartCalculations.total.toFixed(2)}
+                                    Rs. {cartCalculations.total.toFixed(2)}
                                 </span>
                             </div>
                         </div>

@@ -139,15 +139,15 @@ const ProductDetailPage = ({ addToCart }) => {
 
               <div className="mb-8">
                 <div className="text-4xl font-bold" style={{ color: '#0486D2' }}>
-                  Pkr{parseFloat(product.price).toFixed(2)}
+                  Rs. {parseFloat(product.price).toFixed(2)}
                 </div>
                 {selectedAddons.length > 0 && (
                   <div className="mt-2">
                     <div className="text-sm text-gray-600">
-                      Selected Extras: +Pkr{selectedAddons.reduce((sum, addon) => sum + parseFloat(addon.price || 0), 0).toFixed(2)}
+                      Selected Extras: +Rs. {selectedAddons.reduce((sum, addon) => sum + parseFloat(addon.price || 0), 0).toFixed(2)}
                     </div>
                     <div className="text-lg font-semibold mt-1" style={{ color: '#F279AB' }}>
-                      Total per item: Pkr{(parseFloat(product.price) + selectedAddons.reduce((sum, addon) => sum + parseFloat(addon.price || 0), 0)).toFixed(2)}
+                      Total per item: Rs. {(parseFloat(product.price) + selectedAddons.reduce((sum, addon) => sum + parseFloat(addon.price || 0), 0)).toFixed(2)}
                     </div>
                   </div>
                 )}
@@ -188,7 +188,7 @@ const ProductDetailPage = ({ addToCart }) => {
                             </div>
                           </div>
                           <div className="font-bold" style={{ color: '#F279AB' }}>
-                            +Pkr{addon.price}
+                            +Rs. {addon.price}
                           </div>
                         </div>
                       );
@@ -239,12 +239,12 @@ const ProductDetailPage = ({ addToCart }) => {
 
                 <button
                   onClick={handleAddToCart}
-                  className="w-full px-6 py-4 text-white rounded-lg transition-all text-lg font-semibold shadow-md hover:shadow-lg transform hover:scale-105"
-                  style={{ background: 'linear-gradient(135deg, #0486D2 0%, #0366A6 100%)' }}
+                  className="w-full px-6 py-4 text-white rounded-lg bg-[#ed7baa] transition-all text-lg font-semibold shadow-md hover:shadow-lg transform hover:scale-105"
+
                 >
                   <span>Add to Cart</span>
-                  <span className="px-2 py-1 rounded text-sm" style={{ background: 'rgba(255,255,255,0.2)' }}>
-                    Pkr{calculateTotalPrice().toFixed(2)}
+                  <span className="px-2 py-1 rounded ">
+                    Rs. {calculateTotalPrice().toFixed(2)}
                   </span>
                 </button>
               </div>
@@ -291,7 +291,7 @@ const ProductDetailPage = ({ addToCart }) => {
                     )}
                     <div className="absolute top-2 right-2 bg-white rounded-full px-2 py-1 shadow-lg border text-sm font-semibold"
                       style={{ borderColor: '#0486D2', color: '#0486D2' }}>
-                      Pkr{parseFloat(popularProduct.price).toFixed(2)}
+                      Rs. {parseFloat(popularProduct.price).toFixed(2)}
                     </div>
                   </div>
 

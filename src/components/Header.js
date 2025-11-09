@@ -88,7 +88,7 @@ const Header = ({
     
     debounceTimer.current = setTimeout(() => {
       setSearchTerm(value);
-    }, 400);
+    }, 500);
   }, [setSearchTerm]);
 
   // Handle input change

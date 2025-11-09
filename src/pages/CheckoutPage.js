@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, CreditCard, User, CheckCircle, Award } from 'lucide-react';
 
-const CheckoutPage = ({ cart, getDeliveryFee,placeOrder, api,  setCurrentUser }) => {
+const CheckoutPage = ({ cart, getDeliveryFee, placeOrder, api, setCurrentUser }) => {
   const navigate = useNavigate(); // ✅ use the hook here
 
   const [customerInfo, setCustomerInfo] = useState({
@@ -157,40 +157,42 @@ const CheckoutPage = ({ cart, getDeliveryFee,placeOrder, api,  setCurrentUser })
     );
   }
 
-  {/* Unified Success Modal */}
-{showOrderSuccess && (
-  <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
-    <div
-      className="bg-white rounded-3xl max-w-md w-full p-10 text-center shadow-2xl border-4 animate-fade-in"
-      style={{ borderColor: '#F279AB' }}
-    >
-      <div
-        className="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg"
-        style={{ backgroundColor: '#0486D2' }}
-      >
-        <Award className="w-12 h-12 text-white" />
+  {/* Unified Success Modal */ }
+  {
+    showOrderSuccess && (
+      <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+        <div
+          className="bg-white rounded-3xl max-w-md w-full p-10 text-center shadow-2xl border-4 animate-fade-in"
+          style={{ borderColor: '#F279AB' }}
+        >
+          <div
+            className="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg"
+            style={{ backgroundColor: '#0486D2' }}
+          >
+            <Award className="w-12 h-12 text-white" />
+          </div>
+
+          <h3 className="text-3xl font-bold mb-3" style={{ color: '#F279AB' }}>
+            {isMember ? `Welcome back, ${userInfo?.first_name || 'SooIcy Member'}!` : 'Welcome to the SooIcy Family! 🎉'}
+          </h3>
+
+          <p className="mb-8 text-lg font-medium" style={{ color: '#0486D2' }}>
+            {isMember
+              ? 'Your order has been placed successfully. We’re so glad to have you with us again!'
+              : 'Your account has been created and your order is confirmed. Enjoy your SooIcy treats!'}
+          </p>
+
+          <button
+            onClick={() => setShowOrderSuccess(false)}
+            className="px-8 py-4 text-white rounded-xl font-bold hover:shadow-2xl transition-all transform hover:-translate-y-1"
+            style={{ backgroundColor: '#0486D2' }}
+          >
+            Continue Shopping
+          </button>
+        </div>
       </div>
-
-      <h3 className="text-3xl font-bold mb-3" style={{ color: '#F279AB' }}>
-        {isMember ? `Welcome back, ${userInfo?.first_name || 'SooIcy Member'}!` : 'Welcome to the SooIcy Family! 🎉'}
-      </h3>
-
-      <p className="mb-8 text-lg font-medium" style={{ color: '#0486D2' }}>
-        {isMember
-          ? 'Your order has been placed successfully. We’re so glad to have you with us again!'
-          : 'Your account has been created and your order is confirmed. Enjoy your SooIcy treats!'}
-      </p>
-
-      <button
-        onClick={() => setShowOrderSuccess(false)}
-        className="px-8 py-4 text-white rounded-xl font-bold hover:shadow-2xl transition-all transform hover:-translate-y-1"
-        style={{ backgroundColor: '#0486D2' }}
-      >
-        Continue Shopping
-      </button>
-    </div>
-  </div>
-)}
+    )
+  }
 
 
   return (
@@ -317,7 +319,7 @@ const CheckoutPage = ({ cart, getDeliveryFee,placeOrder, api,  setCurrentUser })
                     />
                     <div className="flex-1">
                       <div className="font-bold text-lg" style={{ color: '#F279AB' }}>🚚 Delivery</div>
-                      <div className="text-sm font-medium mt-1" style={{ color: '#0486D2' }}>Delivered to your address (+Pkr{getDeliveryFee()})</div>
+                      <div className="text-sm font-medium mt-1" style={{ color: '#0486D2' }}>Delivered to your address (+Rs. {getDeliveryFee()})</div>
                     </div>
                   </label>
                   <label className="flex items-center p-5 border-2 rounded-xl cursor-pointer hover:shadow-lg transition-all transform hover:-translate-y-0.5" style={{
@@ -466,7 +468,7 @@ const CheckoutPage = ({ cart, getDeliveryFee,placeOrder, api,  setCurrentUser })
                           <span className="font-semibold ml-2" style={{ color: '#0486D2' }}>x{item.quantity}</span>
                         </div>
                         <span className="font-bold" style={{ color: '#0486D2' }}>
-                          Pkr{totalPerItem.toFixed(2)}
+                          Rs. {totalPerItem.toFixed(2)}
                         </span>
                       </div>
                       {item.selectedAddons && item.selectedAddons.length > 0 && (
@@ -474,7 +476,7 @@ const CheckoutPage = ({ cart, getDeliveryFee,placeOrder, api,  setCurrentUser })
                           {item.selectedAddons.map(addon => (
                             <div key={addon.id} className="flex justify-between text-gray-600">
                               <span>+ {addon.name}</span>
-                              <span>Pkr{(parseFloat(addon.price) * item.quantity).toFixed(2)}</span>
+                              <span>Rs. {(parseFloat(addon.price) * item.quantity).toFixed(2)}</span>
                             </div>
                           ))}
                         </div>
@@ -490,14 +492,14 @@ const CheckoutPage = ({ cart, getDeliveryFee,placeOrder, api,  setCurrentUser })
                   <div className="flex justify-between font-semibold">
                     <span style={{ color: '#F279AB' }}>Items Subtotal:</span>
                     <span style={{ color: '#0486D2' }}>
-                      Pkr{cart.reduce((sum, item) => sum + (parseFloat(item.price || 0) * item.quantity), 0).toFixed(2)}
+                      Rs. {cart.reduce((sum, item) => sum + (parseFloat(item.price || 0) * item.quantity), 0).toFixed(2)}
                     </span>
                   </div>
                   {cart.some(item => item.selectedAddons?.length > 0) && (
                     <div className="flex justify-between font-semibold">
                       <span style={{ color: '#F279AB' }}>Addons Total:</span>
                       <span style={{ color: '#0486D2' }}>
-                        Pkr{cart.reduce((sum, item) =>
+                        Rs. {cart.reduce((sum, item) =>
                           sum + ((item.selectedAddons || []).reduce(
                             (addonSum, addon) => addonSum + parseFloat(addon.price || 0), 0
                           ) * item.quantity), 0).toFixed(2)}
@@ -507,11 +509,11 @@ const CheckoutPage = ({ cart, getDeliveryFee,placeOrder, api,  setCurrentUser })
                 </div>
                 <div className="flex justify-between font-semibold">
                   <span style={{ color: '#F279AB' }}>Delivery Fee:</span>
-                  <span style={{ color: '#0486D2' }}>Pkr{deliveryFee.toFixed(2)}</span>
+                  <span style={{ color: '#0486D2' }}>Rs. {deliveryFee.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between font-semibold">
                   <span style={{ color: '#F279AB' }}>Tax (8%):</span>
-                  <span style={{ color: '#0486D2' }}>Pkr{(subtotal * 0.08).toFixed(2)}</span>
+                  <span style={{ color: '#0486D2' }}>Rs. {(subtotal * 0.08).toFixed(2)}</span>
                 </div>
                 <div className="border-t-2 pt-4 flex justify-between font-bold text-2xl" style={{ borderColor: '#0486D2' }}>
                   <span style={{ color: '#F279AB' }}>Total:</span>
@@ -520,7 +522,7 @@ const CheckoutPage = ({ cart, getDeliveryFee,placeOrder, api,  setCurrentUser })
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent'
                   }}>
-                    Pkr{(subtotal + deliveryFee + (subtotal * 0.08)).toFixed(2)}
+                    Rs. {(subtotal + deliveryFee + (subtotal * 0.08)).toFixed(2)}
                   </span>
                 </div>
               </div>
@@ -543,7 +545,7 @@ const CheckoutPage = ({ cart, getDeliveryFee,placeOrder, api,  setCurrentUser })
                   }`}
                 style={{ background: 'linear-gradient(135deg, #0486D2 0%, #0366A6 100%)' }}
               >
-                {isSubmitting ? 'Processing...' : `Place Order - Pkr${total.toFixed(2)}`}
+                {isSubmitting ? 'Processing...' : `Place Order - Rs. ${total.toFixed(2)}`}
               </button>
             </div>
           </div>

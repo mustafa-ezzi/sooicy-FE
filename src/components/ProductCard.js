@@ -66,11 +66,11 @@ const ProductCard = ({ product, addToCart, setSelectedProduct }) => {
           <h3 className="text-xl font-bold text-[#F279AB] line-clamp-1">{product.name}</h3>
           <div className="text-right">
             <span className="text-2xl font-bold text-[#0486D2]">
-              Pkr{calculateTotalPrice()}
+              Rs. {calculateTotalPrice()}
             </span>
             {product.discount > 0 && (
               <div className="text-sm text-gray-500 line-through">
-                Pkr{product.price}
+                Rs. {product.price}
               </div>
             )}
           </div>
@@ -117,7 +117,7 @@ const ProductCard = ({ product, addToCart, setSelectedProduct }) => {
                       </div>
                     </div>
                     <span className="text-sm font-semibold text-[#0486D2]">
-                      +Pkr{addon.price}
+                      +Rs. {addon.price}
                     </span>
                   </div>
                 ))}

@@ -325,76 +325,76 @@ const OrdersPage = ({ orders, currentUser }) => {
                 )}
 
                 <div className="bg-gray-50 rounded-xl p-6">
-  <h3 className="font-semibold text-gray-800 mb-4">Order Items</h3>
-  <div className="space-y-3">
-    {order.items.map((item, index) => (
-      <div
-        key={item.id || index}
-        className="bg-white rounded-lg p-4 shadow-sm border border-gray-100"
-      >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            {item.product_image && (
-              <img
-                src={item.product_image}
-                alt={item.product_name}
-                className="w-16 h-16 rounded-lg object-cover"
-              />
-            )}
-            <div>
-              <h4 className="font-medium text-gray-800">{item.product_name}</h4>
-              <p className="text-sm text-gray-600">
-                Qty: {item.quantity} × Pkr{item.unit_price}
-              </p>
-              {item.special_instructions && (
-                <p className="text-xs text-gray-500 mt-1">
-                  Note: {item.special_instructions}
-                </p>
-              )}
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="font-semibold text-gray-800">Pkr{item.total_price}</p>
-            {item.addons_price && (
-              <p className="text-xs text-gray-500">
-                + Add-ons: Pkr{item.addons_price}
-              </p>
-            )}
-          </div>
-        </div>
+                  <h3 className="font-semibold text-gray-800 mb-4">Order Items</h3>
+                  <div className="space-y-3">
+                    {order.items.map((item, index) => (
+                      <div
+                        key={item.id || index}
+                        className="bg-white rounded-lg p-4 shadow-sm border border-gray-100"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-4">
+                            {item.product_image && (
+                              <img
+                                src={item.product_image}
+                                alt={item.product_name}
+                                className="w-16 h-16 rounded-lg object-cover"
+                              />
+                            )}
+                            <div>
+                              <h4 className="font-medium text-gray-800">{item.product_name}</h4>
+                              <p className="text-sm text-gray-600">
+                                Qty: {item.quantity} × Rs. {item.unit_price}
+                              </p>
+                              {item.special_instructions && (
+                                <p className="text-xs text-gray-500 mt-1">
+                                  Note: {item.special_instructions}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <p className="font-semibold text-gray-800">Rs. {item.total_price}</p>
+                            {item.addons_price && (
+                              <p className="text-xs text-gray-500">
+                                + Add-ons: Rs. {item.addons_price}
+                              </p>
+                            )}
+                          </div>
+                        </div>
 
-        {/* ✅ Add-ons section */}
-        {item.addons_detail && item.addons_detail.length > 0 && (
-          <div className="mt-3 ml-6 bg-gray-50 rounded-lg p-3 border-l-4 border-pink-300">
-            <p className="text-sm font-semibold text-pink-600 mb-2 flex items-center">
-               Add-ons
-            </p>
-            <ul className="space-y-1 text-sm text-gray-700">
-              {item.addons_detail.map((addon) => (
-                <li
-                  key={addon.id}
-                  className="flex justify-between items-center border-b last:border-none pb-1"
-                >
-                  <div>
-                    <span className="font-medium">{addon.name}</span>
-                    {addon.description && (
-                      <p className="text-xs text-gray-500 italic">
-                        {addon.description}
-                      </p>
-                    )}
+                        {/* ✅ Add-ons section */}
+                        {item.addons_detail && item.addons_detail.length > 0 && (
+                          <div className="mt-3 ml-6 bg-gray-50 rounded-lg p-3 border-l-4 border-pink-300">
+                            <p className="text-sm font-semibold text-pink-600 mb-2 flex items-center">
+                              Add-ons
+                            </p>
+                            <ul className="space-y-1 text-sm text-gray-700">
+                              {item.addons_detail.map((addon) => (
+                                <li
+                                  key={addon.id}
+                                  className="flex justify-between items-center border-b last:border-none pb-1"
+                                >
+                                  <div>
+                                    <span className="font-medium">{addon.name}</span>
+                                    {addon.description && (
+                                      <p className="text-xs text-gray-500 italic">
+                                        {addon.description}
+                                      </p>
+                                    )}
+                                  </div>
+                                  <span className="text-gray-800 font-medium">
+                                    +Rs. {addon.price}
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                  <span className="text-gray-800 font-medium">
-                    +Pkr{addon.price}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
-    ))}
-  </div>
-</div>
+                </div>
 
               </div>
 
@@ -406,19 +406,19 @@ const OrdersPage = ({ orders, currentUser }) => {
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between">
                       <span className="text-gray-600">Subtotal:</span>
-                      <span>Pkr{(order.subtotal || '0.00')}</span>
+                      <span>Rs. {(order.subtotal || '0.00')}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Delivery Fee:</span>
-                      <span>Pkr{(order.delivery_fee || order.deliveryFee || '0.00')}</span>
+                      <span>Rs. {(order.delivery_fee || order.deliveryFee || '0.00')}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Tax:</span>
-                      <span>Pkr{(order.tax || '0.00')}</span>
+                      <span>Rs. {(order.tax || '0.00')}</span>
                     </div>
                     <div className="border-t pt-3 flex justify-between font-bold text-lg">
                       <span>Total:</span>
-                      <span className="text-pink-600">Pkr{order.total}</span>
+                      <span className="text-pink-600">Rs. {order.total}</span>
                     </div>
                   </div>
 
@@ -645,7 +645,7 @@ const OrdersPage = ({ orders, currentUser }) => {
                   <div className="flex items-center space-x-4">
                     <div className="text-right">
                       <p className="text-sm text-gray-600">Total Amount</p>
-                      <p className="text-2xl font-bold text-pink-600">Pkr{order.total}</p>
+                      <p className="text-2xl font-bold text-pink-600">Rs. {order.total}</p>
                     </div>
                     <button
                       onClick={() => setSelectedOrder(order)}
@@ -678,7 +678,7 @@ const OrdersPage = ({ orders, currentUser }) => {
                               <div>
                                 <h4 className="font-medium text-gray-800">{item.product_name}</h4>
                                 <p className="text-sm text-gray-600">
-                                  Qty: {item.quantity} × Pkr{item.unit_price}
+                                  Qty: {item.quantity} × Rs. {item.unit_price}
                                 </p>
                                 {item.special_instructions && (
                                   <p className="text-xs text-gray-500 mt-1">
@@ -688,10 +688,10 @@ const OrdersPage = ({ orders, currentUser }) => {
                               </div>
                             </div>
                             <div className="text-right">
-                              <p className="font-semibold text-gray-800">Pkr{item.total_price}</p>
+                              <p className="font-semibold text-gray-800">Rs. {item.total_price}</p>
                               {item.addons_price && (
                                 <p className="text-xs text-gray-500">
-                                  + Add-ons: Pkr{item.addons_price}
+                                  + Add-ons: Rs. {item.addons_price}
                                 </p>
                               )}
                             </div>
@@ -718,7 +718,7 @@ const OrdersPage = ({ orders, currentUser }) => {
                                       )}
                                     </div>
                                     <span className="text-gray-800 font-medium">
-                                      +Pkr{addon.price}
+                                      +Rs. {addon.price}
                                     </span>
                                   </li>
                                 ))}
