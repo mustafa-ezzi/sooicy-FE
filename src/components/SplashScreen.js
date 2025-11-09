@@ -41,22 +41,6 @@ const SplashScreen = ({ onComplete }) => {
           </div>
         </div>
 
-        {/* Title */}
-        <h1 
-          className="text-5xl font-bold mb-2 animate-fade-in-delay"
-          style={{ color: '#ed709e' }}
-        >
-          SooIcy
-        </h1>
-
-        {/* Subtitle */}
-        <p 
-          className="text-lg font-light animate-fade-in-delay-2"
-          style={{ color: '#178BD0' }}
-        >
-          Deliciously Cool 🍧
-        </p>
-
         {/* Loading Dots */}
         <div className="flex justify-center items-center space-x-2 mt-6 animate-fade-in-delay-3">
           <div 

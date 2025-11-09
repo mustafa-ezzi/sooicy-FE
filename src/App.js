@@ -9,7 +9,7 @@ import Popup from './components/Popup';
 import LocationPopup from './components/LocationPopup';
 import NotificationSystem from './components/NotificationSystem';
 import WhatsAppButton from './components/Whatsapp';
-import SplashScreen from './components/SplashScreen'; // ✅ Import the new splash screen
+import SplashScreen from './components/SplashScreen';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ProductDetailPage from './pages/ProductDetailPage';
@@ -26,10 +26,9 @@ import RiderManagement from './pages/admin/RiderManagement';
 import AdminOrder from './pages/admin/OrderManagement';
 import ProtectedRoute from './components/ProtectedRoute';
 import apiService from './services/apiService';
-import { addNotification, getTotalPrice, getCartItemCount, filterProducts } from './utils/helpers';
+import { addNotification, getTotalPrice, getCartItemCount } from './utils/helpers';
 
 function App() {
-  // ✅ Add splash screen state
   const [showSplash, setShowSplash] = useState(true);
   const [splashComplete, setSplashComplete] = useState(false);
 
@@ -55,14 +54,12 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [lastOrder, setLastOrder] = useState(null);
 
-  // ✅ Handle splash screen completion
   const handleSplashComplete = () => {
     setShowSplash(false);
     setSplashComplete(true);
   };
 
   useEffect(() => {
-    // Only load data after splash is complete
     if (splashComplete) {
       loadInitialData();
     }
@@ -184,19 +181,19 @@ function App() {
             : item
         );
       }
-      
-      return [...prev, { 
-        ...product, 
+
+      return [...prev, {
+        ...product,
         quantity: product.quantity || 1,
         cartItemId: Date.now(),
         selectedAddons: product.selectedAddons || []
       }];
     });
-    
-    const addonText = product.selectedAddons && product.selectedAddons.length > 0 
-      ? ` with ${product.selectedAddons.length} addon(s)` 
+
+    const addonText = product.selectedAddons && product.selectedAddons.length > 0
+      ? ` with ${product.selectedAddons.length} addon(s)`
       : '';
-    
+
     addNotification(notifications, setNotifications, `${product.name}${addonText} added to cart`);
   };
 
@@ -262,7 +259,7 @@ function App() {
   const placeOrder = async (orderDetails) => {
     try {
       console.log('Cart items:', cart);
-      
+
       if (!cart || cart.length === 0) {
         throw new Error('Cart is empty');
       }
@@ -369,7 +366,7 @@ function App() {
         };
 
         console.log('Complete order data being sent:', JSON.stringify(orderData, null, 2));
-        
+
         const backendOrder = await apiService.createOrder(orderData);
         console.log('Backend order created:', backendOrder);
 
@@ -447,6 +444,8 @@ function App() {
             setIsMenuOpen={setIsMenuOpen}
             currentUser={currentUser}
             onUserLogout={handleUserLogout}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
           />
 
           {showWelcomeMessage && (
@@ -472,7 +471,7 @@ function App() {
           <NotificationSystem notifications={notifications} />
           {children}
           <Footer />
-          <WhatsAppButton 
+          <WhatsAppButton
             phoneNumber="+923325159474"
             message="Hi! I'm interested in SooIcy products."
           />
@@ -481,12 +480,10 @@ function App() {
     </div>
   );
 
-  // ✅ Show splash screen while loading
   if (showSplash) {
     return <SplashScreen onComplete={handleSplashComplete} />;
   }
 
-  // ✅ Show loading state after splash
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 to-blue-50">
@@ -505,7 +502,7 @@ function App() {
         <Route path="/" element={
           <CustomerApp>
             <HomePage
-              products={filterProducts(products, searchTerm, selectedCategory)}
+              products={products}
               categories={categories}
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}

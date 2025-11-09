@@ -182,27 +182,6 @@ const filteredProducts = products.filter(product => {
         {/* Hero content */}
         <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center z-10">
 
-
-          {/* Search Bar */}
-          <div className="max-w-md mx-auto">
-            <div className="relative">
-              <Search
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5"
-                style={{ color: "#0486D2" }}
-              />
-              <input
-                type="text"
-                placeholder="Search for food..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 rounded-full border-2 focus:outline-none transition-all bg-white placeholder-gray-400 shadow-md"
-                style={{
-                  borderColor: "#0486D2",
-                  color: "#F279AB",
-                }}
-              />
-            </div>
-          </div>
         </div>
       </div>
 

@@ -1,234 +1,321 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   ShoppingCart,
-  User,
-  Menu,
-  X,
-  Bell,
   Home,
-  Package,
-  MapPin,
-  Crown,
-  LogOut,
+  User,
   Phone,
+  MapPin,
+  Search,
+  X,
+  Menu,
+  Info,
 } from 'lucide-react';
-import logo from "../logo/sooicy-logo.png";
+import logo from '../logo/sooicy-logo.png';
 
 const Header = ({
   cartItemCount,
   selectedLocation,
   setShowLocationPopup,
-  isMenuOpen,
-  setIsMenuOpen,
-  currentUser,
-  onUserLogout
+  setSearchTerm,
+  searchTerm,
 }) => {
   const navigate = useNavigate();
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm || '');
+  const searchInputRef = useRef(null);
 
-  const navigationItems = [
-    { key: '/', label: 'Home', icon: Home },
-    { key: '/about', label: 'About', icon: User },
-    { key: '/orders', label: 'Orders', icon: Package },
-  ];
+  // Sync local state with prop
+  useEffect(() => {
+    setLocalSearchTerm(searchTerm || '');
+  }, [searchTerm]);
 
   const handleNavigation = (path) => {
     navigate(path);
-    setIsMenuOpen(false);
+    setShowMobileMenu(false);
   };
 
+  // Handle search input change with debouncing
+  const handleSearchChange = (value) => {
+    setLocalSearchTerm(value);
+    // Update parent immediately to prevent re-render issues
+    if (setSearchTerm) {
+      setSearchTerm(value);
+    }
+  };
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showMobileMenu && !event.target.closest('.mobile-menu-container')) {
+        setShowMobileMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showMobileMenu]);
+
   return (
-    <header className="bg-white shadow-lg sticky top-0 z-40 border-b-2 border-[#0486D2]">
-      <div className="container mx-auto px-4 py-3">
-        <div className="flex items-center justify-between">
-          {/* Left side - Logo and Mobile Menu */}
-          <div className="flex items-center space-x-4">
-            <button
-              className="lg:hidden p-2 hover:bg-[#0486D2]/10 rounded-lg transition-colors text-[#0486D2]"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-            <div
-              className="flex items-center space-x-2 cursor-pointer group"
-              onClick={() => handleNavigation('/')}
-            >
-              <img
-                src={logo}
-                alt="SooIcy Logo"
-                className="w-[100px] h-[100px] object-contain group-hover:scale-105 transition-transform"
-              />
+    <>
+      {/* ===== DESKTOP HEADER ===== */}
+      <header
+        className="hidden md:flex sticky top-0 z-50 bg-white border-b-4 shadow-lg items-center justify-between px-6 lg:px-8 py-3"
+        style={{ borderColor: '#0188D3' }}
+      >
+        {/* Left Section: Location - WIDER */}
+        <div className="flex items-center min-w-[240px]">
+          <button
+            onClick={() => setShowLocationPopup(true)}
+            className="w-full flex items-center space-x-2 bg-gradient-to-r from-blue-50 to-pink-50 px-4 py-2.5 rounded-xl border-2 border-[#0188D3]/20 shadow-sm hover:shadow-md transition-all hover:scale-105"
+          >
+            <MapPin className="w-5 h-5 text-[#0188D3] flex-shrink-0" />
+            <div className="text-left flex-1 min-w-0">
+              <div className="text-sm font-bold text-[#ED709E] truncate">
+                {selectedLocation?.name || 'Select Location'}
+              </div>
+              {selectedLocation?.delivery_time && (
+                <div className="text-xs text-gray-600 font-medium">
+                  ⏱️ {selectedLocation.delivery_time}
+                </div>
+              )}
             </div>
+          </button>
+        </div>
+
+        {/* Middle Section: Logo */}
+        <div
+          className="flex items-center cursor-pointer hover:scale-110 transition-transform duration-300"
+          onClick={() => handleNavigation('/')}
+        >
+          <img
+            src={logo}
+            alt="SooIcy Logo"
+            className="w-[90px] h-[90px] object-contain drop-shadow-lg"
+          />
+        </div>
+
+        {/* Right Section: Search + Navigation */}
+        <div className="flex items-center space-x-2 min-w-[240px] justify-end">
+          {/* Always visible search input */}
+          <div className="flex items-center bg-white border-2 border-[#0188D3] rounded-full px-4 py-2 shadow-sm focus-within:shadow-md transition-all">
+            <Search className="w-4 h-4 text-[#0188D3] mr-2 flex-shrink-0" />
+            <input
+              type="text"
+              placeholder="Search..."
+              value={localSearchTerm}
+              onChange={(e) => handleSearchChange(e.target.value)}
+              className="w-32 lg:w-48 text-sm outline-none"
+              style={{ color: '#ED709E' }}
+            />
           </div>
 
-          <div className="hidden md:flex items-center space-x-4">
-            <button
-              onClick={() => setShowLocationPopup(true)}
-              className="flex items-center space-x-2 px-3 py-2 bg-white hover:bg-[#0486D2]/5 rounded-lg shadow border border-[#0486D2]/20 transition-all hover:shadow-md"
-            >
-              <MapPin className="w-4 h-4 text-[#0486D2]" />
-              <div className="text-left">
-                <div className="text-sm font-semibold text-[#F279AB]">
-                  {selectedLocation?.name}
-                </div>
-                <div className="text-xs text-gray-500">
-                  {selectedLocation?.delivery_time}
-                </div>
-              </div>
-            </button>
+          {/* Navigation Icons */}
+          <button
+            onClick={() => handleNavigation('/')}
+            className="p-2.5 rounded-full hover:bg-blue-50 text-[#0188D3] hover:text-[#ED709E] transition-all hover:scale-110"
+            title="Home"
+          >
+            <Home className="w-5 h-5" />
+          </button>
 
-            {currentUser && (
-              <div className="flex items-center space-x-2 px-3 py-2 bg-gradient-to-r from-[#F279AB]/10 to-[#0486D2]/10 border-2 border-[#F279AB] rounded-lg shadow">
-                <Crown className="w-4 h-4 text-[#F279AB]" />
-                <div className="text-left">
-                  <div className="text-sm font-bold text-[#F279AB]">
-                    {currentUser.name}
-                  </div>
-                  <div className="text-xs text-[#0486D2]">
-                    SooIcy Member • {currentUser.total_orders} orders
-                  </div>
-                </div>
-              </div>
+          <button
+            onClick={() => handleNavigation('/about')}
+            className="p-2.5 rounded-full hover:bg-blue-50 text-[#0188D3] hover:text-[#ED709E] transition-all hover:scale-110"
+            title="About Us"
+          >
+            <Info className="w-5 h-5" />
+          </button>
+
+          <a
+            href="tel:+923111794175"
+            className="p-2.5 rounded-full hover:bg-blue-50 text-[#0188D3] hover:text-[#ED709E] transition-all hover:scale-110"
+            title="Call Us"
+          >
+            <Phone className="w-5 h-5" />
+          </a>
+
+          {/* Cart with Badge */}
+          <button
+            onClick={() => handleNavigation('/cart')}
+            className="relative p-2.5 rounded-full bg-gradient-to-r from-[#ED709E] to-[#ff94c2] text-white hover:shadow-lg transition-all hover:scale-110"
+            title="Shopping Cart"
+          >
+            <ShoppingCart className="w-5 h-5" />
+            {cartItemCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-[#0188D3] text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-md animate-bounce">
+                {cartItemCount}
+              </span>
             )}
+          </button>
+        </div>
+      </header>
+
+      {/* ===== MOBILE HEADER ===== */}
+      <header
+        className="md:hidden sticky top-0 z-50 bg-white border-b-4 shadow-lg"
+        style={{ borderColor: '#0188D3' }}
+      >
+        <div className="flex items-center justify-between px-4 py-2">
+          {/* Logo */}
+          <div
+            className="flex items-center cursor-pointer"
+            onClick={() => handleNavigation('/')}
+          >
+            <img
+              src={logo}
+              alt="SooIcy Logo"
+              className="w-[60px] h-[60px] object-contain"
+            />
           </div>
 
-          {/* Right side - Navigation */}
-          <nav className="hidden lg:flex items-center space-x-4">
-            {navigationItems.map(({ key, label, icon: Icon }) => (
-              <button
-                key={key}
-                onClick={() => handleNavigation(key)}
-                className="flex items-center space-x-1 px-4 py-2 rounded-lg transition-colors text-[#0486D2] hover:bg-[#0486D2]/10 hover:text-[#F279AB] font-medium"
-              >
-                <Icon className="w-4 h-4" />
-                <span>{label}</span>
-              </button>
-            ))}
-
-            {/* ✅ Phone Box (after Orders button) */}
-            <div className="flex items-center space-x-3">
-  {/* Call Button */}
-  <a
-    href="tel:+92 332 5159474"
-    className="flex items-center space-x-2 px-4 py-2 rounded-lg border border-[#0486D2]/20 text-[#0486D2] hover:bg-[#F279AB]/10 hover:text-[#F279AB] font-medium transition-all"
-  >
-    <Phone className="w-4 h-4" />
-    <span className="font-semibold">+92 311 1794175</span>
-  </a>
-
-</div>
-
-          </nav>
-
-          {/* Right side - Action buttons */}
+          {/* Right Icons */}
           <div className="flex items-center space-x-2">
-            <button
-              onClick={() => setShowLocationPopup(true)}
-              className="md:hidden p-2 hover:bg-[#0486D2]/10 rounded-lg transition-colors text-[#0486D2]"
-            >
-              <MapPin className="w-6 h-6" />
-            </button>
-
             {/* Cart */}
             <button
               onClick={() => handleNavigation('/cart')}
-              className="relative p-2 hover:bg-[#F279AB]/10 rounded-lg transition-colors text-[#F279AB]"
+              className="relative p-2 rounded-full bg-gradient-to-r from-[#ED709E] to-[#ff94c2] text-white"
             >
-              <ShoppingCart className="w-6 h-6" />
+              <ShoppingCart className="w-4 h-4" />
               {cartItemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#0486D2] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-pulse font-bold">
+                <span className="absolute -top-1 -right-1 bg-[#0188D3] text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
                   {cartItemCount}
                 </span>
               )}
             </button>
 
-            
-
-            {currentUser && (
-              <button
-                onClick={onUserLogout}
-                className="hidden md:flex items-center space-x-1 px-3 py-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors text-sm font-medium"
-                title="Logout"
-              >
-                <LogOut className="w-4 h-4" />
-                <span className="hidden lg:inline">Logout</span>
-              </button>
-            )}
+            {/* Menu */}
+            <button
+              onClick={() => setShowMobileMenu(!showMobileMenu)}
+              className="p-2 rounded-full hover:bg-gray-100 text-[#0188D3]"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="lg:hidden mt-4 pb-4 border-t border-[#0486D2]/20 pt-4">
-            <div className="mb-4 p-3 bg-white rounded-lg border border-[#0486D2]/20">
-              <button
-                onClick={() => { setShowLocationPopup(true); setIsMenuOpen(false); }}
-                className="flex items-center space-x-2 w-full text-left"
-              >
-                <MapPin className="w-5 h-5 text-[#0486D2]" />
-                <div>
-                  <div className="font-semibold text-[#F279AB]">
-                    {selectedLocation?.name}
-                  </div>
-                  <div className="text-sm text-gray-500">
-                    Delivery: {selectedLocation?.delivery_time}
-                  </div>
+        {/* Mobile Search Bar */}
+        <div className="px-4 pb-3">
+          <div className="flex items-center bg-white border-2 border-[#0188D3] rounded-full px-3 py-2 shadow-md">
+            <Search className="w-4 h-4 text-[#0188D3] mr-2 flex-shrink-0" />
+            <input
+              type="text"
+              placeholder="Search for food..."
+              value={localSearchTerm}
+              onChange={(e) => handleSearchChange(e.target.value)}
+              className="flex-1 text-sm outline-none"
+              style={{ color: '#ED709E' }}
+            />
+          </div>
+        </div>
+
+        {/* Location Bar - WIDER */}
+        <div className="px-4 pb-2">
+          <button
+            onClick={() => setShowLocationPopup(true)}
+            className="w-full flex items-center space-x-2 bg-gradient-to-r from-blue-50 to-pink-50 px-3 py-2.5 rounded-lg border border-[#0188D3]/20"
+          >
+            <MapPin className="w-4 h-4 text-[#0188D3] flex-shrink-0" />
+            <div className="text-left flex-1 min-w-0">
+              <div className="text-xs font-bold text-[#ED709E] truncate">
+                {selectedLocation?.name || 'Select Location'}
+              </div>
+              {selectedLocation?.delivery_time && (
+                <div className="text-[10px] text-gray-600">
+                  ⏱️ {selectedLocation.delivery_time}
                 </div>
+              )}
+            </div>
+          </button>
+        </div>
+      </header>
+
+      {/* ===== MOBILE MENU DRAWER ===== */}
+      {showMobileMenu && (
+        <>
+          {/* Overlay */}
+          <div
+            className="md:hidden fixed inset-0 bg-black/50 z-40 animate-fade-in"
+            onClick={() => setShowMobileMenu(false)}
+          ></div>
+
+          {/* Menu Drawer */}
+          <div className="md:hidden mobile-menu-container fixed right-0 top-0 bottom-0 w-64 bg-white shadow-2xl z-50 animate-slide-in-right">
+            <div className="p-4 border-b-2 border-[#0188D3] flex justify-between items-center">
+              <h2 className="text-lg font-bold text-[#ED709E]">Menu</h2>
+              <button
+                onClick={() => setShowMobileMenu(false)}
+                className="p-1 hover:bg-gray-100 rounded-full"
+              >
+                <X className="w-5 h-5 text-gray-500" />
               </button>
             </div>
 
-            {currentUser && (
-              <div className="mb-4 p-3 bg-gradient-to-r from-[#F279AB]/10 to-[#0486D2]/10 border-2 border-[#F279AB] rounded-lg">
-                <div className="flex items-center space-x-2">
-                  <Crown className="w-5 h-5 text-[#F279AB]" />
-                  <div>
-                    <div className="font-bold text-[#F279AB]">
-                      {currentUser.name}
-                    </div>
-                    <div className="text-sm text-[#0486D2]">
-                      SooIcy Member • {currentUser.total_orders} orders • ₨{currentUser.total_spent} spent
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* ✅ Mobile Navigation + Phone */}
-            <nav className="flex flex-col space-y-2">
-              {navigationItems.map(({ key, label, icon: Icon }) => (
-                <button
-                  key={key}
-                  onClick={() => handleNavigation(key)}
-                  className="flex items-center space-x-2 px-4 py-2 rounded-lg text-left transition-colors text-[#0486D2] hover:bg-[#0486D2]/10 hover:text-[#F279AB] font-medium"
-                >
-                  <Icon className="w-4 h-4" />
-                  <span>{label}</span>
-                </button>
-              ))}
-
-              {/* ✅ Mobile Phone Box */}
-              <a
-                href="tel:+923363399445"
-                className="flex items-center space-x-2 px-4 py-2 rounded-lg text-left transition-colors text-[#0486D2] hover:bg-[#F279AB]/10 hover:text-[#F279AB] font-medium"
+            <nav className="p-4 space-y-2">
+              <button
+                onClick={() => handleNavigation('/')}
+                className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-blue-50 text-[#0188D3] transition-colors"
               >
-                <Phone className="w-4 h-4" />
-                <span>+92 311 1794175</span>
-              </a>
+                <Home className="w-5 h-5" />
+                <span className="font-semibold">Home</span>
+              </button>
 
-              {currentUser && (
-                <button
-                  onClick={() => { onUserLogout(); setIsMenuOpen(false); }}
-                  className="flex items-center space-x-2 px-4 py-2 rounded-lg text-left transition-colors text-red-500 hover:bg-red-50 border-t mt-2 pt-4 font-medium"
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span>Logout</span>
-                </button>
-              )}
+              <button
+                onClick={() => handleNavigation('/about')}
+                className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-blue-50 text-[#0188D3] transition-colors"
+              >
+                <Info className="w-5 h-5" />
+                <span className="font-semibold">About Us</span>
+              </button>
+
+              <button
+                onClick={() => handleNavigation('/orders')}
+                className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-blue-50 text-[#0188D3] transition-colors"
+              >
+                <User className="w-5 h-5" />
+                <span className="font-semibold">My Orders</span>
+              </button>
+
+              <a
+                href="tel:+923111794175"
+                className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-blue-50 text-[#0188D3] transition-colors"
+              >
+                <Phone className="w-5 h-5" />
+                <span className="font-semibold">Call Us</span>
+              </a>
             </nav>
           </div>
-        )}
-      </div>
-    </header>
+        </>
+      )}
+
+      <style jsx>{`
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes slide-in-right {
+          from {
+            transform: translateX(100%);
+          }
+          to {
+            transform: translateX(0);
+          }
+        }
+
+        .animate-fade-in {
+          animation: fade-in 0.2s ease-out;
+        }
+
+        .animate-slide-in-right {
+          animation: slide-in-right 0.3s ease-out;
+        }
+      `}</style>
+    </>
   );
 };
 
